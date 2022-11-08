@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using fixxo_backend.Models.Entities.Customer;
+using fixxo_backend.Models.Entities.Order;
+using fixxo_backend.Models.Entities.Product;
+using Microsoft.EntityFrameworkCore;
 
 namespace fixxo_backend.Contexts
 {
@@ -8,6 +11,15 @@ namespace fixxo_backend.Contexts
         {
         }
 
-        //input entitys
+        public DbSet<CustomerEntity> Customers { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<OrderProductsEntity> OrderProducts { get; set; }
+        public DbSet<CategoryEntity> Categories { get; set; }
+        public DbSet<ColorEntity> Colors { get; set; }
+        public DbSet<ProductColorsEntity> ProductColors { get; set; }
+        public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<ProductSizesEntity> ProductSizes { get; set; }
+        public DbSet<SizeEntity> Sizes { get; set; }
+        public DbSet<SubCategoryEntity> SubCategories { get; set; }
     }
 }
