@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "87jRGPFBB6kj1Aq9OFbcWShmFlLV8IvbKzEAzkrL5k8=",
+  "Source": "fixxo-backend",
+  "BasePath": "_content/fixxo-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
