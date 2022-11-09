@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using fixxo_backend.Models.Entities.Order;
+using System.ComponentModel.DataAnnotations;
 
 namespace fixxo_backend.Models.Entities.Customer
 {
@@ -21,5 +22,7 @@ namespace fixxo_backend.Models.Entities.Customer
 
         [Required]
         public byte[] PasswordSalt { get; set; }
+
+        public IEnumerable<OrderEntity> Orders { get; set; }
     }
 }

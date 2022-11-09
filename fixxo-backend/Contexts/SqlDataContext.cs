@@ -13,13 +13,11 @@ namespace fixxo_backend.Contexts
 
         public DbSet<CustomerEntity> Customers { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
-        public DbSet<OrderProductsEntity> OrderProducts { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ColorEntity> Colors { get; set; }
-        public DbSet<ProductColorsEntity> ProductColors { get; set; }
         public DbSet<ProductEntity> Products { get; set; }
-        public DbSet<ProductSizesEntity> ProductSizes { get; set; }
         public DbSet<SizeEntity> Sizes { get; set; }
         public DbSet<SubCategoryEntity> SubCategories { get; set; }
+        public DbSet<OrderProductEntity> OrderProducts { get; set; }
     }
 }

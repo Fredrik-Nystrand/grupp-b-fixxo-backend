@@ -1,12 +1,11 @@
 ﻿using fixxo_backend.Models.Entities.Order;
+using fixxo_backend.Models.Entities.Product;
 using System.ComponentModel.DataAnnotations;
 
-namespace fixxo_backend.Models.Entities.Product
+namespace fixxo_backend.Models.Products
 {
-    public class ProductEntity
+    public class ProductRequest
     {
-        [Key]
-        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -22,17 +21,15 @@ namespace fixxo_backend.Models.Entities.Product
 
         public decimal SalePrice { get; set; }
 
-        public decimal Rating { get; set; } = 0;
-
         [Required]
         public int CategoryId { get; set; }
 
         [Required]
         public int SubCategoryId { get; set; }
 
-        public IEnumerable<ColorEntity> Colors { get; set; }
+        public int[] Colors { get; set; }
 
-        public IEnumerable<SizeEntity> Sizes { get; set; }
+        public int[] Sizes { get; set; }
 
     }
 }

@@ -22,6 +22,36 @@ namespace fixxobackend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ColorEntityProductEntity", b =>
+                {
+                    b.Property<int>("ColorsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ColorsId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("ColorEntityProductEntity");
+                });
+
+            modelBuilder.Entity("ProductEntitySizeEntity", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "SizesId");
+
+                    b.HasIndex("SizesId");
+
+                    b.ToTable("ProductEntitySizeEntity");
+                });
+
             modelBuilder.Entity("fixxo_backend.Models.Entities.Customer.CustomerEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -72,9 +102,6 @@ namespace fixxobackend.Migrations
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderProductsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TotalPrice")
                         .HasColumnType("int");
 
@@ -83,10 +110,12 @@ namespace fixxobackend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("fixxo_backend.Models.Entities.Order.OrderProductsEntity", b =>
+            modelBuilder.Entity("fixxo_backend.Models.Entities.Order.OrderProductEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,22 +123,27 @@ namespace fixxobackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ColorId")
+                    b.Property<int>("colorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("orderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("productId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SizeId")
+                    b.Property<int>("sizeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("colorId");
+
+                    b.HasIndex("orderId");
+
+                    b.HasIndex("productId");
+
+                    b.HasIndex("sizeId");
 
                     b.ToTable("OrderProducts");
                 });
@@ -148,25 +182,6 @@ namespace fixxobackend.Migrations
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("fixxo_backend.Models.Entities.Product.ProductColorsEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductColors");
-                });
-
             modelBuilder.Entity("fixxo_backend.Models.Entities.Product.ProductEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -193,12 +208,6 @@ namespace fixxobackend.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductColorsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductSizesId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Rating")
                         .HasColumnType("decimal(18,2)");
 
@@ -211,25 +220,6 @@ namespace fixxobackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("fixxo_backend.Models.Entities.Product.ProductSizesEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductSizes");
                 });
 
             modelBuilder.Entity("fixxo_backend.Models.Entities.Product.SizeEntity", b =>
@@ -267,6 +257,92 @@ namespace fixxobackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubCategories");
+                });
+
+            modelBuilder.Entity("ColorEntityProductEntity", b =>
+                {
+                    b.HasOne("fixxo_backend.Models.Entities.Product.ColorEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ColorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("fixxo_backend.Models.Entities.Product.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductEntitySizeEntity", b =>
+                {
+                    b.HasOne("fixxo_backend.Models.Entities.Product.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("fixxo_backend.Models.Entities.Product.SizeEntity", null)
+                        .WithMany()
+                        .HasForeignKey("SizesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("fixxo_backend.Models.Entities.Order.OrderEntity", b =>
+                {
+                    b.HasOne("fixxo_backend.Models.Entities.Customer.CustomerEntity", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("fixxo_backend.Models.Entities.Order.OrderProductEntity", b =>
+                {
+                    b.HasOne("fixxo_backend.Models.Entities.Product.ColorEntity", "color")
+                        .WithMany()
+                        .HasForeignKey("colorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("fixxo_backend.Models.Entities.Order.OrderEntity", "order")
+                        .WithMany("Products")
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("fixxo_backend.Models.Entities.Product.ProductEntity", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("fixxo_backend.Models.Entities.Product.SizeEntity", "size")
+                        .WithMany()
+                        .HasForeignKey("sizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("color");
+
+                    b.Navigation("order");
+
+                    b.Navigation("product");
+
+                    b.Navigation("size");
+                });
+
+            modelBuilder.Entity("fixxo_backend.Models.Entities.Customer.CustomerEntity", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("fixxo_backend.Models.Entities.Order.OrderEntity", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
