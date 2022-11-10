@@ -84,6 +84,7 @@ namespace fixxo_backend.Controllers
 
                     var newProduct = new ProductResponse
                     {
+                        Id = product.Id,
                         Name = product.Name,
                         ImgUrl = product.ImgUrl,
                         Description = product.Description,
