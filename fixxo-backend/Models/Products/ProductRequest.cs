@@ -21,6 +21,8 @@ namespace fixxo_backend.Models.Products
 
         public decimal SalePrice { get; set; }
 
+        public decimal Rating { get; set; }
+
         [Required]
         public int CategoryId { get; set; }
 

@@ -50,6 +50,7 @@ namespace fixxo_backend.Controllers
                     SalePrice = req.SalePrice,
                     CategoryId = req.CategoryId,
                     SubCategoryId = req.SubCategoryId,
+                    Rating = req.Rating,
                     Colors = colors,
                     Sizes = sizes,
 
@@ -89,6 +90,7 @@ namespace fixxo_backend.Controllers
                         ImgUrl = product.ImgUrl,
                         Description = product.Description,
                         Price = product.Price,
+                        Rating = product.Rating,
                         SalePrice = product.SalePrice,
                         Colors = product.Colors,
                         Sizes = product.Sizes,
@@ -134,6 +136,7 @@ namespace fixxo_backend.Controllers
                     SalePrice = product.SalePrice,
                     Colors = product.Colors,
                     Sizes = product.Sizes,
+                    Rating = product.Rating,
                     Category = await _context.Categories.FindAsync(product.CategoryId),
                     SubCategory = await _context.SubCategories.FindAsync(product.SubCategoryId)
                 };
